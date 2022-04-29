@@ -1,6 +1,3 @@
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.sun.glass.ui.Application;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import top.factories.FilmFactory;
@@ -9,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +24,6 @@ public class Main {
                 String line = reader.readLine();
                 if (line == null)
                     break;
-                System.out.println(line);
                 strings.add(line);
             }
         } catch (IOException e) {
