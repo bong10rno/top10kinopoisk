@@ -9,6 +9,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 @SpringBootApplication(scanBasePackages = "top")
@@ -22,8 +24,8 @@ public class Main {
             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openConnection().getInputStream(), "UTF-8"));
             while (true) {
                 String line = reader.readLine();
-                if (line == null)
-                    break;
+                if (line == null) break;
+                System.out.println(line);
                 strings.add(line);
             }
         } catch (IOException e) {
@@ -31,6 +33,8 @@ public class Main {
         }
         FilmFactory filmFactory = new FilmFactory();
         System.out.println(strings.size());
-        Arrays.asList(strings.get(1).split("styles_root__ti07r")).get(1);
+        Pattern pattern = Pattern.compile("TDe4E>(.)*?</span>");
+        Matcher matcher = pattern.matcher(Arrays.asList(strings.get(1).split("styles_root__ti07r")).get(1));
+        matcher.groupCount();
     }
 }
