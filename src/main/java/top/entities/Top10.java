@@ -2,37 +2,50 @@ package top.entities;
 
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name="TOP10")
 public class Top10 {
     @Id
-    @GeneratedValue
-    private int id;
-    @OneToOne(targetEntity = Film.class,
-            cascade = CascadeType.ALL)
-    @Column(name="FILM_ID")
-    private int filmId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+    @OneToOne(targetEntity = Film.class, cascade = CascadeType.ALL)
+    @JoinColumn(name="FILM_ID", referencedColumnName = "ID")
+    private Film film;
     @Column(name="POSITION")
     private int position;
+    @Column(name="VOTERS")
+    private long voters;
     @Column(name="DATE")
-    private String date;
+    private Date date;
 
-    public int getId() {
+    public Top10(Film film, int position, long voters, Date date) {
+        this.film = film;
+        this.position = position;
+        this.date = date;
+        this.voters = voters;
+    }
+
+    public Top10() {
+
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
 
-    public int getFilmId() {
-        return filmId;
+    public Film getFilm() {
+        return film;
     }
 
-    public void setFilmId(int filmId) {
-        this.filmId = filmId;
+    public void setFilm(Film film) {
+        this.film = film;
     }
 
 
@@ -45,13 +58,19 @@ public class Top10 {
     }
 
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
+    public long getVoters() {
+        return voters;
+    }
 
+    public void setVoters(long voters) {
+        this.voters = voters;
+    }
 }
