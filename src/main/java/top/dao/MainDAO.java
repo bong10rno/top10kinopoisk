@@ -34,7 +34,6 @@ public class MainDAO {
         criteriaQuery.select(root);
         criteriaQuery.where(root.get("date").in(date));
         TypedQuery<Top10> query = session.createQuery(criteriaQuery);
-        System.out.println("getTop10forDate ");
         return query.getResultList();
     }
 

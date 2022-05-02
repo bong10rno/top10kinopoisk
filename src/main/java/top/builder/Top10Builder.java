@@ -59,13 +59,13 @@ public class Top10Builder {
     }
 
     private void parseRating(String s) {
-        Pattern pattern = Pattern.compile("d5cca7fd.*?div");
+        Pattern pattern = Pattern.compile("9qXjg.*?span");
         Matcher matcher = pattern.matcher(s);
         if (matcher.find()) {
             s = s.substring(matcher.start(), matcher.end());
-            this.rating = Float.parseFloat((s.substring(s.indexOf(">")+1, s.indexOf("<"))));
+            this.rating = Float.parseFloat((s.substring(s.indexOf(">") + 1, s.indexOf("<"))));
         } else {
-            throw new IllegalStateException("Can't parse position");
+            throw new IllegalStateException("Can't parse rating");
         }
     }
 
@@ -74,7 +74,7 @@ public class Top10Builder {
         Matcher matcher = pattern.matcher(s);
         if (matcher.find()) {
             s = s.substring(matcher.start(), matcher.end());
-            this.voters = Integer.parseInt(s.substring(s.indexOf(">")+1, s.indexOf("<")).replaceAll(" ",""));
+            this.voters = Integer.parseInt(s.substring(s.indexOf(">") + 1, s.indexOf("<")).replaceAll(" ", ""));
         } else {
             throw new IllegalStateException("Can't parse position");
         }
@@ -85,29 +85,11 @@ public class Top10Builder {
         Matcher matcher = pattern.matcher(s);
         if (matcher.find()) {
             s = s.substring(matcher.start(), matcher.end());
-            this.position = Integer.parseInt(s.substring(s.indexOf(">")+1, s.indexOf("<")));
+            this.position = Integer.parseInt(s.substring(s.indexOf(">") + 1, s.indexOf("<")));
         } else {
             throw new IllegalStateException("Can't parse position");
         }
     }
-
-//    private void parseFilmId(String s) {
-//        Pattern pattern = Pattern.compile("film/\\d+/");
-//        Matcher matcher = pattern.matcher(s);
-//        if (matcher.find()) {
-//            s = s.substring(matcher.start(), matcher.end());
-//            pattern = Pattern.compile("\\d+");
-//            matcher = pattern.matcher(s);
-//            if (matcher.find()) {
-//                this.film = Integer.parseInt(s.substring(matcher.start(), matcher.end()));
-//            } else {
-//                throw new IllegalStateException("Can't parse ID");
-//            }
-//        } else {
-//            throw new IllegalStateException("Can't parse ID");
-//        }
-//    }
-
 
     private Date getDate() {
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
@@ -117,6 +99,5 @@ public class Top10Builder {
         calendar.set(Calendar.MILLISECOND, 0);
         return calendar.getTime();
     }
-
 
 }

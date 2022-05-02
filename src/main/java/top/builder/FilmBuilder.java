@@ -56,6 +56,8 @@ public class FilmBuilder {
         if (matcher.find()) {
             s = s.substring(matcher.start(), matcher.end());
             this.name = s.substring(s.indexOf("\"") + 1, s.indexOf("\" "));
+        } else {
+            throw new IllegalStateException("Can't parse name");
         }
     }
 
@@ -75,9 +77,8 @@ public class FilmBuilder {
                 this.year = Integer.parseInt(strings[1].trim().replaceAll(String.valueOf((char) 160), ""));
                 this.duration = Integer.parseInt(strings[2].trim().replaceAll(String.valueOf((char) 160), "")); //#160 symbol might be here
             }
-
         } else {
-            throw new IllegalStateException("Can't parse name year and duration");
+            throw new IllegalStateException("Can't parse original name year and duration");
         }
     }
 
