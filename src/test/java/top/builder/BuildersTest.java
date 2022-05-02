@@ -16,14 +16,14 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 
 public class BuildersTest {
 
     private static String notParsedString;
+
     @BeforeAll
-    static void setUp(){
+    static void setUp() {
         List<String> strings = new ArrayList<>();
         try {
             FileReader fileReader = new FileReader("src/test/page.txt");
@@ -57,12 +57,12 @@ public class BuildersTest {
     @Test
     void top10ParserTest() {
         Film film = mock(Film.class);
-        when(film.getId()).thenReturn(435L);
         Top10Builder top10Builder = new Top10Builder(film);
         Top10 top10 = top10Builder.buildFromString(notParsedString);
         assertEquals(top10.getFilm(), film);
         assertEquals(top10.getVoters(), 14743);
         assertEquals(top10.getPosition(), 1);
+        assertEquals(top10.getRating(), 9.1f);
         assertNotNull(top10.getDate());
     }
 
