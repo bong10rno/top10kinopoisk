@@ -2,6 +2,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -11,10 +12,11 @@ import top.service.MainService;
 
 @SpringBootApplication(scanBasePackages = "top")
 @ServletComponentScan
-@EnableJpaRepositories(basePackages="top")
+@EnableJpaRepositories(basePackages = "top")
 @EnableTransactionManagement
-@EntityScan(basePackages="top")
+@EntityScan(basePackages = "top")
 @EnableScheduling
+@EnableCaching
 public class Main {
 
     private static MainService mainService;
@@ -22,7 +24,7 @@ public class Main {
     private static ApplicationContext applicationContext;
 
     public static void main(String[] args) {
-        ApplicationContext applicationContext =  SpringApplication.run(Main.class, args);
+        ApplicationContext applicationContext = SpringApplication.run(Main.class, args);
         mainService = applicationContext.getBean(MainService.class);
         System.out.println("ready");
         //mainService.readTopFilms();

@@ -1,19 +1,21 @@
 package top.entities;
 
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name = "TOP10")
+@Table(name = "TOP10",
+        indexes = {
+                @Index(columnList = "date", name = "top10_date_hidx")})
 public class Top10 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -50,7 +52,6 @@ public class Top10 {
         this.id = id;
     }
 
-
     public Film getFilm() {
         return film;
     }
@@ -58,7 +59,6 @@ public class Top10 {
     public void setFilm(Film film) {
         this.film = film;
     }
-
 
     public int getPosition() {
         return position;

@@ -1,6 +1,7 @@
 package top.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import top.dao.MainDAO;
@@ -27,6 +28,7 @@ public class MainService {
     public MainService() {
     }
 
+    @Cacheable("top10")
     public List<Top10> getTop10FilmsForDate(Date date) {
         return mainDAO.getTop10ForDate(date);
     }
@@ -57,6 +59,7 @@ public class MainService {
         }
     }
 
+    @Cacheable("dates")
     public List<Date> getAllDatesOfTop10() {
         return mainDAO.getAllDatesOfTop10();
     }
