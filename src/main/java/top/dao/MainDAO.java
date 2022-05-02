@@ -50,4 +50,13 @@ public class MainDAO {
             return session;
         }
     }
+
+    public List<Date> getAllDatesOfTop10() {
+        CriteriaBuilder criteriaBuilder = getSession().getCriteriaBuilder();
+        CriteriaQuery<Date> criteriaQuery = criteriaBuilder.createQuery(Date.class);
+        Root<Top10> root = criteriaQuery.from(Top10.class);
+        criteriaQuery.select(root.get("date")).distinct(true);
+        TypedQuery<Date> query = session.createQuery(criteriaQuery);
+        return query.getResultList();
+    }
 }

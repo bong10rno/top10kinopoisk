@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 public class Top10Builder {
     Film film;
     int position;
+    float rating;
     Date date;
     long voters;
 
@@ -21,6 +22,11 @@ public class Top10Builder {
 
     public Top10Builder withPosition(int position) {
         this.position = position;
+        return this;
+    }
+
+    public Top10Builder withRating(float rating) {
+        this.rating = rating;
         return this;
     }
 
@@ -40,15 +46,27 @@ public class Top10Builder {
         top10.setPosition(position);
         top10.setVoters(voters);
         top10.setDate(date);
+        top10.setRating(rating);
         return top10;
     }
 
     public Top10 buildFromString(String s) {
-       // parseFilmId(s);
         parsePosition(s);
+        parseRating(s);
         parseVoters(s);
         this.date = getDate();
         return build();
+    }
+
+    private void parseRating(String s) {
+        Pattern pattern = Pattern.compile("d5cca7fd.*?div");
+        Matcher matcher = pattern.matcher(s);
+        if (matcher.find()) {
+            s = s.substring(matcher.start(), matcher.end());
+            this.rating = Float.parseFloat((s.substring(s.indexOf(">")+1, s.indexOf("<"))));
+        } else {
+            throw new IllegalStateException("Can't parse position");
+        }
     }
 
     private void parseVoters(String s) {

@@ -1,16 +1,9 @@
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import top.service.MainService;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @ComponentScan("top")
-public class Config {
-
-//    @Bean
-//    MainService mainService(){
-//        MainService mainService = new MainService();
-//        return mainService;
-//    }
+public class Config implements WebMvcConfigurer {
 
 }

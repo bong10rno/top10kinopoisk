@@ -1,4 +1,4 @@
-package top.rest;
+package top.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping(value = "/api", produces = APPLICATION_JSON_VALUE)
-public class Controller {
+public class ControllerRest {
     @Autowired
     private MainService mainService;
 

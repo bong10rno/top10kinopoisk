@@ -32,15 +32,16 @@ public class MainService {
     }
 
     @Scheduled(cron = "0 0 0 * * *")
-    public void readTopFilms(){
+    public void readTopFilms() {
         List<String> strings = new ArrayList<>();
         try {
             URL url = new URL("https://www.kinopoisk.ru/lists/movies/top250/");
             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openConnection().getInputStream()));
             while (true) {
                 String line = reader.readLine();
-                if (line == null)
+                if (line == null) {
                     break;
+                }
                 strings.add(line);
             }
         } catch (IOException e) {
@@ -49,10 +50,14 @@ public class MainService {
         FilmFactory filmFactory = new FilmFactory();
         Top10Factory top10Factory = new Top10Factory();
         List<String> stringList = Arrays.asList(strings.get(1).split("styles_root__ti07r"));
-        for (int i = 1; i< 11;i++){
+        for (int i = 1; i < 11; i++) {
             Film film = filmFactory.getFilmsFromString(stringList.get(i));
             mainDAO.save(film);
             mainDAO.save(top10Factory.getTop10FromStringAndFilm(stringList.get(i), film));
         }
+    }
+
+    public List<Date> getAllDatesOfTop10() {
+        return mainDAO.getAllDatesOfTop10();
     }
 }
