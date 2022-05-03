@@ -1,6 +1,7 @@
 package top.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -18,12 +19,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class MainService {
 
     @Autowired
     MainDAO mainDAO;
+
+    @Autowired
+    CacheManager cacheManager;
 
     public MainService() {
     }
@@ -35,6 +40,7 @@ public class MainService {
 
     @Scheduled(cron = "0 0 0 * * *")
     public void readTopFilms() {
+        clearCache();
         List<String> strings = new ArrayList<>();
         try {
             URL url = new URL("https://www.kinopoisk.ru/lists/movies/top250/");
@@ -57,6 +63,11 @@ public class MainService {
             mainDAO.save(film);
             mainDAO.save(top10Factory.getTop10FromStringAndFilm(stringList.get(i), film));
         }
+    }
+
+    private void clearCache() {
+        Objects.requireNonNull(cacheManager.getCache("dates")).clear();
+        Objects.requireNonNull(cacheManager.getCache("top10")).clear();
     }
 
     @Cacheable("dates")
