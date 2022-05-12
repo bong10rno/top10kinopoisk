@@ -1,6 +1,7 @@
 package top.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,11 +16,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 public class MainService {
@@ -52,6 +49,7 @@ public class MainService {
                 }
                 strings.add(line);
             }
+            reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -66,8 +64,8 @@ public class MainService {
     }
 
     private void clearCache() {
-        Objects.requireNonNull(cacheManager.getCache("dates")).clear();
-        Objects.requireNonNull(cacheManager.getCache("top10")).clear();
+        Optional.ofNullable(cacheManager.getCache("dates")).ifPresent(Cache::clear);
+        Optional.ofNullable(cacheManager.getCache("top10")).ifPresent(Cache::clear);
     }
 
     @Cacheable("dates")
