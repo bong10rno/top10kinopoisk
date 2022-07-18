@@ -6,11 +6,11 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import top.builder.FilmBuilder;
+import top.builder.Top10Builder;
 import top.dao.MainDAO;
 import top.entities.Film;
 import top.entities.Top10;
-import top.factories.FilmFactory;
-import top.factories.Top10Factory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -53,13 +53,15 @@ public class MainService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        FilmFactory filmFactory = new FilmFactory();
-        Top10Factory top10Factory = new Top10Factory();
+
+
         List<String> stringList = Arrays.asList(strings.get(1).split("styles_root__ti07r"));
         for (int i = 1; i < 11; i++) {
-            Film film = filmFactory.getFilmsFromString(stringList.get(i));
+            FilmBuilder filmBuilder = new FilmBuilder();
+            Film film = filmBuilder.buildFromString(stringList.get(i));
             mainDAO.save(film);
-            mainDAO.save(top10Factory.getTop10FromStringAndFilm(stringList.get(i), film));
+            Top10Builder top10Builder = new Top10Builder(film);
+            mainDAO.save(top10Builder.buildFromString(stringList.get(i)));
         }
     }
 
